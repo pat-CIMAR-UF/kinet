@@ -60,8 +60,6 @@ def main():
         print("begin")
         pds.append(fix1)
         pds.go()  
-        time.sleep(3)
-
         pds.append(fix2)
         pds.go()
         time.sleep(3)
