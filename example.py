@@ -1,4 +1,10 @@
 from kinet import *
+import time
+import sys
+import os
+
+pds = PowerSupply("192.168.50.99")
+
 
 def rainbow_cycle(pds, pause=.1, steps=1000):
     div = steps / len(pds)
@@ -26,20 +32,60 @@ def fader(pds1, cnt):
         pds2.clear()
         cnt -= 1
 
-if __name__ == '__main__':
+def main():
     # Our ethernet attached power supply.
-    pds = PowerSupply("192.168.1.121")
 
     # Our light fixtures
     fix1 = FixtureRGB(0)
     fix2 = FixtureRGB(3)
     fix3 = FixtureRGB(6)
+    fix4 = FixtureRGB(9)
+
+    fix1.red = 70
+    fix1.green = 70
+    fix1.blue = 50
+
+    fix2.red = 70
+
+    fix3.blue = 70
+
+    fix4.green = 70
 
     # Attach our fixtures to the power supply
-    pds.append(fix1)
-    pds.append(fix2)
-    pds.append(fix3)
+    #pds.append(fix1)
+    #pds.append(fix2)
+    #pds.append(fix3)
 
-    while 1:
-        fader(pds, 10)
-        rainbow_cycle(pds)
+    while True:
+        print("begin")
+        pds.append(fix1)
+        pds.go()  
+        time.sleep(3)
+
+        pds.append(fix2)
+        pds.go()
+        time.sleep(3)
+'''
+        pds.append(fix3)
+        pds.go()
+        time.sleep(3)
+
+        pds.append(fix4)
+        pds.go()
+        time.sleep(3)
+        pds.clear()
+        print("end")
+'''
+
+
+
+if __name__ == '__main__':
+    try:
+        main()
+    except KeyboardInterrupt:
+        print('Interrupted')
+        pds.clear()
+        try:
+            sys.exit(0)
+        except SystemExit:
+            os._exit(0)
