@@ -34,7 +34,6 @@ def fader(pds1, cnt):
 
 def main():
     # Our ethernet attached power supply.
-
     # Our light fixtures
     fix1 = FixtureRGB(0)
     fix2 = FixtureRGB(3)
@@ -43,40 +42,28 @@ def main():
 
     fix1.red = 70
     fix1.green = 70
-    fix1.blue = 50
+    fix1.blue = 0
 
     fix2.red = 70
+    fix2.green = 0
+    fix2.blue = 70
 
+    fix3.red = 0
+    fix3.green = 70
     fix3.blue = 70
-
+    
     fix4.green = 70
 
     # Attach our fixtures to the power supply
-    #pds.append(fix1)
-    #pds.append(fix2)
-    #pds.append(fix3)
-
+    pds.append(fix1)
+    pds.append(fix2)
+    pds.append(fix3)
+    pds.append(fix4)
+    
     while True:
         print("begin")
-        pds.append(fix1)
         pds.go()  
-        time.sleep(3)
-
-        pds.append(fix2)
-        pds.go()
-        time.sleep(3)
-'''
-        pds.append(fix3)
-        pds.go()
-        time.sleep(3)
-
-        pds.append(fix4)
-        pds.go()
-        time.sleep(3)
-        pds.clear()
-        print("end")
-'''
-
+        time.sleep(10)
 
 
 if __name__ == '__main__':
