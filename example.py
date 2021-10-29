@@ -13,7 +13,7 @@ pds = PowerSupply("192.168.50.99")
 
 def ocean_cycle(pds, pause = 0.2):
     for i in range(175, 211) + range(210, 175, -1):
-        for k in range(50, 101, 1) + range(100, 50, -1):
+        for k in range(45, 101, 1) + range(100, 45, -1):
             hue = i / float(360.0)
             saturation = 0.95
             value = k / float(100.0)
