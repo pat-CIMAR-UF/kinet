@@ -3,67 +3,40 @@ import time
 import sys
 import os
 
+'''
+Blue_1 10, 163, 207
+Blue_2 0, 101, 196
+Blue_3 0, 62, 120
+'''
+
 pds = PowerSupply("192.168.50.99")
 
+def ocean_cycle(pds, pause = 0.2):
+    for i in range(175, 211) + range(210, 175, -1):
+        for k in range(50, 101, 1) + range(100, 50, -1):
+            hue = i / float(360.0)
+            saturation = 0.95
+            value = k / float(100.0)
 
-def rainbow_cycle(pds, pause=.1, steps=1000):
-    div = steps / len(pds)
-    for step in range(steps):
-        ratio = 0
-        for idx, fixture in enumerate(pds):
-            ratio += (step + idx * div) % steps / float(steps)
-            fixture.hsv = (ratio, 1.0, 1.0)
-        print pds
-        pds.go()
-        time.sleep(pause)
-        
-# example of how to use the FadeIter
-def fader(pds1, cnt):
-    pds2 = pds1.copy()
-    while cnt:
-        pds1[random.randint(0, 2)][random.randint(0, 2)] = random.randint(0, 255)
-        pds2[random.randint(0, 2)][random.randint(0, 2)] = random.randint(0, 255)
-        print "%s => %s" % (pds1, pds2)
-        fi1 = FadeIter(pds1, pds2, .5)
-        fi2 = FadeIter(pds2, pds1, .5)
-        fi1.go()
-        fi2.go()
-        pds1.clear()
-        pds2.clear()
-        cnt -= 1
+            print(hue, saturation, value)
+            for fixture in pds:
+                fixture.hsv = (hue, saturation, value)
+            
+            pds.go()
+            time.sleep(0.2)
 
 def main():
-    # Our ethernet attached power supply.
-    # Our light fixtures
     fix1 = FixtureRGB(0)
     fix2 = FixtureRGB(3)
     fix3 = FixtureRGB(6)
     fix4 = FixtureRGB(9)
-
-    fix1.red = 70
-    fix1.green = 70
-    fix1.blue = 0
-
-    fix2.red = 70
-    fix2.green = 0
-    fix2.blue = 70
-
-    fix3.red = 0
-    fix3.green = 70
-    fix3.blue = 70
-    
-    fix4.green = 70
-
-    # Attach our fixtures to the power supply
     pds.append(fix1)
     pds.append(fix2)
     pds.append(fix3)
     pds.append(fix4)
-    
+
     while True:
-        print("begin")
-        pds.go()  
-        time.sleep(10)
+        ocean_cycle(pds)
 
 
 if __name__ == '__main__':
